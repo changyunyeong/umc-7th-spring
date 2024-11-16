@@ -41,8 +41,6 @@ public class QMember extends EntityPathBase<Member> {
 
     public final ListPath<umc7th.example.umc7th.domain.mapping.MemberPrefer, umc7th.example.umc7th.domain.mapping.QMemberPrefer> memberPreferList = this.<umc7th.example.umc7th.domain.mapping.MemberPrefer, umc7th.example.umc7th.domain.mapping.QMemberPrefer>createList("memberPreferList", umc7th.example.umc7th.domain.mapping.MemberPrefer.class, umc7th.example.umc7th.domain.mapping.QMemberPrefer.class, PathInits.DIRECT2);
 
-    public final EnumPath<umc7th.example.umc7th.domain.enums.MemberStatus> memberStatus = createEnum("memberStatus", umc7th.example.umc7th.domain.enums.MemberStatus.class);
-
     public final StringPath name = createString("name");
 
     public final NumberPath<Integer> Point = createNumber("Point", Integer.class);
@@ -52,6 +50,8 @@ public class QMember extends EntityPathBase<Member> {
     public final EnumPath<umc7th.example.umc7th.domain.enums.SocialType> socialType = createEnum("socialType", umc7th.example.umc7th.domain.enums.SocialType.class);
 
     public final StringPath specAddress = createString("specAddress");
+
+    public final EnumPath<umc7th.example.umc7th.domain.enums.MemberStatus> status = createEnum("status", umc7th.example.umc7th.domain.enums.MemberStatus.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;

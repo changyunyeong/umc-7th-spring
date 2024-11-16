@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -26,8 +25,6 @@ public class QFoodCategory extends EntityPathBase<FoodCategory> {
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final ListPath<umc7th.example.umc7th.domain.mapping.MemberPrefer, umc7th.example.umc7th.domain.mapping.QMemberPrefer> memberPreferList = this.<umc7th.example.umc7th.domain.mapping.MemberPrefer, umc7th.example.umc7th.domain.mapping.QMemberPrefer>createList("memberPreferList", umc7th.example.umc7th.domain.mapping.MemberPrefer.class, umc7th.example.umc7th.domain.mapping.QMemberPrefer.class, PathInits.DIRECT2);
 
     public final StringPath name = createString("name");
 
