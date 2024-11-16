@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc7th.example.umc7th.apiPayload.code.status.ErrorStatus;
 import umc7th.example.umc7th.repository.FoodCategoryRepository;
+import umc7th.example.umc7th.service.FoodCategoryService.FoodCategoryQueryService;
 import umc7th.example.umc7th.validation.annotation.ExistCategories;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoriesExistValidator implements ConstraintValidator<ExistCategories, List<Long>> {
 
-    private final FoodCategoryRepository foodCategoryRepository;
+    private final FoodCategoryQueryService foodCategoryQueryService; // Repository 대신 Service 사용
 
     @Override
     public void initialize(ExistCategories constraintAnnotation) {
@@ -23,8 +24,7 @@ public class CategoriesExistValidator implements ConstraintValidator<ExistCatego
 
     @Override
     public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
-        boolean isValid = values.stream()
-                .allMatch(value -> foodCategoryRepository.existsById(value));
+        boolean isValid = foodCategoryQueryService.existsAllByIds(values); // Service 통해 존재 여부 확인
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
