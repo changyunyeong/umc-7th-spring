@@ -1,9 +1,6 @@
 package umc7th.example.umc7th.converter;
 
-import umc7th.example.umc7th.domain.Member;
-import umc7th.example.umc7th.domain.Region;
-import umc7th.example.umc7th.domain.Review;
-import umc7th.example.umc7th.domain.Store;
+import umc7th.example.umc7th.domain.*;
 import umc7th.example.umc7th.web.dto.StoreRequestDTO;
 import umc7th.example.umc7th.web.dto.StoreResponseDTO;
 
@@ -38,6 +35,21 @@ public class StoreConverter {
                 .title(request.getTitle())
                 .body(request.getBody())
                 .score(request.getScore())
+                .build();
+    }
+
+    public static StoreResponseDTO.CreateMissionResultDTO toCreateMissionResultDTO(Mission mission) {
+        return StoreResponseDTO.CreateMissionResultDTO.builder()
+                .missionId(mission.getId())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static Mission toMission(StoreRequestDTO.MissionDTO request) {
+        return Mission.builder()
+                .deadline(request.getDeadline())
+                .missionSpec(request.getMissionSpec())
+                .reward(request.getReward())
                 .build();
     }
 }

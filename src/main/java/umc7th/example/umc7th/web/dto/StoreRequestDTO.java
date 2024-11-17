@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 public class StoreRequestDTO {
     @Getter
     public static class StoreDTO {
@@ -23,5 +25,15 @@ public class StoreRequestDTO {
         String body;
         @NotNull
         Float score;
+    }
+
+    @Getter
+    public static class MissionDTO {
+        @NotNull
+        Integer reward;
+        @NotNull
+        LocalDate deadline;
+        @NotBlank
+        String missionSpec;
     }
 }

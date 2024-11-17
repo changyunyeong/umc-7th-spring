@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc7th.example.umc7th.apiPayload.ApiResponse;
 import umc7th.example.umc7th.converter.StoreConverter;
+import umc7th.example.umc7th.domain.Mission;
 import umc7th.example.umc7th.domain.Review;
 import umc7th.example.umc7th.domain.Store;
 import umc7th.example.umc7th.service.StoreService.StoreCommandService;
@@ -25,9 +26,16 @@ public class StoreRestController {
     }
 
     @PostMapping("/{storeId}/review")
-    public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> createReview(@RequestBody @Valid StoreRequestDTO.ReviewDTO request
-    , @PathVariable("storeId") Long storeId, @RequestParam("memberId") Long memberId) {
+    public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> createReview(@RequestBody @Valid StoreRequestDTO.ReviewDTO request,
+                                                                            @PathVariable("storeId") Long storeId, @RequestParam("memberId") Long memberId) {
         Review review = storeCommandService.createReview(request, storeId, memberId);
         return ApiResponse.onSuccess(StoreConverter.toCreateReviewResultDTO(review));
+    }
+
+    @PostMapping("/{storeId}/mission")
+    public ApiResponse<StoreResponseDTO.CreateMissionResultDTO> createMission(@RequestBody @Valid StoreRequestDTO.MissionDTO request,
+                                                                              @PathVariable("storeId") Long storeId) {
+        Mission mission = storeCommandService.createMission(request, storeId);
+        return ApiResponse.onSuccess(StoreConverter.toCreateMissionResultDTO(mission));
     }
 }
