@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc7th.example.umc7th.converter.StoreConverter;
 import umc7th.example.umc7th.domain.Region;
+import umc7th.example.umc7th.domain.Review;
 import umc7th.example.umc7th.domain.Store;
+import umc7th.example.umc7th.repository.MemberRepository;
 import umc7th.example.umc7th.repository.RegionRepository;
+import umc7th.example.umc7th.repository.ReviewRepository;
 import umc7th.example.umc7th.repository.StoreRepository.StoreRepository;
 import umc7th.example.umc7th.web.dto.StoreRequestDTO;
 
@@ -16,6 +19,8 @@ public class StoreCommandServiceImpl implements StoreCommandService {
 
     private final StoreRepository storeRepository;
     private final RegionRepository regionRepository;
+    private final ReviewRepository reviewRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     @Transactional
@@ -29,5 +34,15 @@ public class StoreCommandServiceImpl implements StoreCommandService {
         Store store = StoreConverter.toStore(request, region);
 
         return storeRepository.save(store);
+    }
+
+    @Override
+    @Transactional
+    public Review createReview(StoreRequestDTO.ReviewDTO request, Long storeId, Long memberId) {
+        Review review = StoreConverter.toReview(request);
+        review.setStore(storeRepository.findById(storeId).get());
+        review.setMember(memberRepository.findById(memberId).get());
+
+        return reviewRepository.save(review);
     }
 }
