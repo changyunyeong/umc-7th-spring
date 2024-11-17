@@ -3,6 +3,8 @@ package umc7th.example.umc7th.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc7th.example.umc7th.apiPayload.code.status.ErrorStatus;
+import umc7th.example.umc7th.apiPayload.exception.handler.StoreHandler;
 import umc7th.example.umc7th.converter.StoreConverter;
 import umc7th.example.umc7th.domain.Mission;
 import umc7th.example.umc7th.domain.Region;
@@ -14,6 +16,9 @@ import umc7th.example.umc7th.repository.RegionRepository;
 import umc7th.example.umc7th.repository.ReviewRepository;
 import umc7th.example.umc7th.repository.StoreRepository.StoreRepository;
 import umc7th.example.umc7th.web.dto.StoreRequestDTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,8 +47,12 @@ public class StoreCommandServiceImpl implements StoreCommandService {
     @Override
     @Transactional
     public Review createReview(StoreRequestDTO.ReviewDTO request, Long storeId, Long memberId) {
+
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
+
         Review review = StoreConverter.toReview(request);
-        review.setStore(storeRepository.findById(storeId).get());
+        review.setStore(store);
         review.setMember(memberRepository.findById(memberId).get());
 
         return reviewRepository.save(review);

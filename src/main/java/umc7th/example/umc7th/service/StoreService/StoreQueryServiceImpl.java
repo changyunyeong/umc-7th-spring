@@ -29,4 +29,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
         return filteredStores;
     }
+
+    @Override
+    public boolean existsAllByIds(List<Long> ids) {
+        return ids.stream().allMatch(storeRepository::existsById);
+    }
 }
