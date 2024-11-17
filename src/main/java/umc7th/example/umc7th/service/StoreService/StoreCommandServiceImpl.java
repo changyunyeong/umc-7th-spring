@@ -4,16 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc7th.example.umc7th.apiPayload.code.status.ErrorStatus;
+import umc7th.example.umc7th.apiPayload.exception.handler.MemberHandler;
+import umc7th.example.umc7th.apiPayload.exception.handler.MissionHandler;
 import umc7th.example.umc7th.apiPayload.exception.handler.StoreHandler;
 import umc7th.example.umc7th.converter.StoreConverter;
-import umc7th.example.umc7th.domain.Mission;
-import umc7th.example.umc7th.domain.Region;
-import umc7th.example.umc7th.domain.Review;
-import umc7th.example.umc7th.domain.Store;
-import umc7th.example.umc7th.repository.MemberRepository;
-import umc7th.example.umc7th.repository.MissionRepository;
-import umc7th.example.umc7th.repository.RegionRepository;
-import umc7th.example.umc7th.repository.ReviewRepository;
+import umc7th.example.umc7th.domain.*;
+import umc7th.example.umc7th.domain.mapping.MemberMission;
+import umc7th.example.umc7th.repository.*;
 import umc7th.example.umc7th.repository.StoreRepository.StoreRepository;
 import umc7th.example.umc7th.web.dto.StoreRequestDTO;
 
@@ -29,6 +26,7 @@ public class StoreCommandServiceImpl implements StoreCommandService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
     private final MissionRepository missionRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
     @Override
     @Transactional
@@ -65,5 +63,25 @@ public class StoreCommandServiceImpl implements StoreCommandService {
         mission.setStore(storeRepository.findById(storeId).get());
 
         return missionRepository.save(mission);
+    }
+
+    @Override
+    public MemberMission createMemberMission(StoreRequestDTO.ChallengingMissionDTO request) {
+
+        Member member = memberRepository.findById(request.getMemberId())
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+        Mission mission = missionRepository.findById(request.getMissionId())
+                .orElseThrow(() -> new MissionHandler(ErrorStatus.MISSION_NOT_FOUND));
+
+        boolean isAlreadyChallenging = memberMissionRepository.existsByMemberAndMission(member, mission);
+        if (isAlreadyChallenging) {
+            throw new MissionHandler(ErrorStatus.ALREADY_CHALLENGING);
+        }
+
+        MemberMission memberMission = StoreConverter.toMemberMission(request);
+        memberMission.setMember(member);
+        memberMission.setMission(mission);
+
+        return memberMissionRepository.save(memberMission);
     }
 }

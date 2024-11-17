@@ -8,6 +8,7 @@ import umc7th.example.umc7th.converter.StoreConverter;
 import umc7th.example.umc7th.domain.Mission;
 import umc7th.example.umc7th.domain.Review;
 import umc7th.example.umc7th.domain.Store;
+import umc7th.example.umc7th.domain.mapping.MemberMission;
 import umc7th.example.umc7th.service.StoreService.StoreCommandService;
 import umc7th.example.umc7th.web.dto.StoreRequestDTO;
 import umc7th.example.umc7th.web.dto.StoreResponseDTO;
@@ -37,5 +38,11 @@ public class StoreRestController {
                                                                               @PathVariable("storeId") Long storeId) {
         Mission mission = storeCommandService.createMission(request, storeId);
         return ApiResponse.onSuccess(StoreConverter.toCreateMissionResultDTO(mission));
+    }
+
+    @PostMapping("/challenging")
+    public ApiResponse<StoreResponseDTO.CreateChallengingMissionResultDTO> createMemberMission(@RequestBody @Valid StoreRequestDTO.ChallengingMissionDTO request) {
+        MemberMission memberMission = storeCommandService.createMemberMission(request);
+        return ApiResponse.onSuccess(StoreConverter.toCreateMemberMissionResultDTO(memberMission));
     }
 }

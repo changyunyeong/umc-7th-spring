@@ -1,6 +1,8 @@
 package umc7th.example.umc7th.converter;
 
 import umc7th.example.umc7th.domain.*;
+import umc7th.example.umc7th.domain.enums.MissionStatus;
+import umc7th.example.umc7th.domain.mapping.MemberMission;
 import umc7th.example.umc7th.web.dto.StoreRequestDTO;
 import umc7th.example.umc7th.web.dto.StoreResponseDTO;
 
@@ -50,6 +52,19 @@ public class StoreConverter {
                 .deadline(request.getDeadline())
                 .missionSpec(request.getMissionSpec())
                 .reward(request.getReward())
+                .build();
+    }
+
+    public static StoreResponseDTO.CreateChallengingMissionResultDTO toCreateMemberMissionResultDTO(MemberMission memberMission) {
+        return StoreResponseDTO.CreateChallengingMissionResultDTO.builder()
+                .memberMissionId(memberMission.getId())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static MemberMission toMemberMission(StoreRequestDTO.ChallengingMissionDTO request) {
+        return MemberMission.builder()
+                .status(MissionStatus.CHALLENGING)
                 .build();
     }
 }

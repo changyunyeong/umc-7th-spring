@@ -38,4 +38,12 @@ public class StoreRequestDTO {
         @NotBlank
         String missionSpec;
     }
+
+    @Getter
+    public static class ChallengingMissionDTO {
+        @NotNull
+        Long memberId;
+        @NotNull
+        Long missionId;
+    }
 }
