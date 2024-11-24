@@ -1,6 +1,7 @@
 package umc7th.example.umc7th.service.StoreService;
 
 import org.springframework.data.domain.Page;
+import umc7th.example.umc7th.domain.Mission;
 import umc7th.example.umc7th.domain.Review;
 import umc7th.example.umc7th.domain.Store;
 
@@ -14,4 +15,5 @@ public interface StoreQueryService {
     boolean existsAllByIds(List<Long> ids);
 
     Page<Review> getReviewList(Long StoreId, Integer page);
+    Page<Mission> getMissionList(Long StoreId, Integer page);
 }
