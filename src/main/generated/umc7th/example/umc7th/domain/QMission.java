@@ -31,6 +31,8 @@ public class QMission extends EntityPathBase<Mission> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final QMember member;
+
     public final ListPath<umc7th.example.umc7th.domain.mapping.MemberMission, umc7th.example.umc7th.domain.mapping.QMemberMission> memberMissionList = this.<umc7th.example.umc7th.domain.mapping.MemberMission, umc7th.example.umc7th.domain.mapping.QMemberMission>createList("memberMissionList", umc7th.example.umc7th.domain.mapping.MemberMission.class, umc7th.example.umc7th.domain.mapping.QMemberMission.class, PathInits.DIRECT2);
 
     public final StringPath missionSpec = createString("missionSpec");
@@ -60,6 +62,7 @@ public class QMission extends EntityPathBase<Mission> {
 
     public QMission(Class<? extends Mission> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
         this.store = inits.isInitialized("store") ? new QStore(forProperty("store"), inits.get("store")) : null;
     }
 

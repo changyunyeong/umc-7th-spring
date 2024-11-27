@@ -21,6 +21,7 @@ public class MemberQueryServiceImpl implements MemberQueryService{
 
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final MissionRepository missionRepository;
 
     @Override
     public Optional<Member> findMember(Long id) {
@@ -33,5 +34,13 @@ public class MemberQueryServiceImpl implements MemberQueryService{
         Page<Review> reviewPage = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
 
         return reviewPage;
+    }
+
+    @Override
+    public Page<Mission> getMemberMissionList(Long memberId, Integer page) {
+        Member member = memberRepository.findById(memberId).get();
+        Page<Mission> missionPage = missionRepository.findAllByMember(member, PageRequest.of(page, 10));
+
+        return missionPage;
     }
 }

@@ -2,6 +2,7 @@ package umc7th.example.umc7th.converter;
 
 import org.springframework.data.domain.Page;
 import umc7th.example.umc7th.domain.Member;
+import umc7th.example.umc7th.domain.Mission;
 import umc7th.example.umc7th.domain.Review;
 import umc7th.example.umc7th.domain.enums.Gender;
 import umc7th.example.umc7th.web.dto.MemberRequestDTO;
@@ -65,6 +66,31 @@ public class MemberConverter {
                 .totalElements(reviewList.getTotalElements())
                 .isFirst(reviewList.isFirst())
                 .isLast(reviewList.isLast())
+                .build();
+    }
+
+    public static MemberResponseDTO.MissionPreViewDTO missionPreViewDTO(Mission mission) {
+        return MemberResponseDTO.MissionPreViewDTO.builder()
+                .missionId(mission.getId())
+                .reward(mission.getReward())
+                .deadline(mission.getDeadline())
+                .missionSpec(mission.getMissionSpec())
+                .createdAt(mission.getCreatedAt())
+                .build();
+    }
+
+    public static MemberResponseDTO.MissionPreViewListDTO missionPreViewListDTO(Page<Mission> missionList) {
+        List<MemberResponseDTO.MissionPreViewDTO> missionPreViewDTOList = missionList.stream()
+                .map(MemberConverter::missionPreViewDTO)
+                .collect(Collectors.toList());
+
+        return MemberResponseDTO.MissionPreViewListDTO.builder()
+                .missionList(missionPreViewDTOList)
+                .listSize(missionPreViewDTOList.size())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .isFirst(missionList.isFirst())
+                .isLast(missionList.isLast())
                 .build();
     }
 }

@@ -11,4 +11,5 @@ import umc7th.example.umc7th.domain.Store;
 public interface MissionRepository extends JpaRepository<Mission, Long> {
 
     Page<Mission> findAllByStore(Store store, PageRequest pageRequest);
+    Page<Mission> findAllByMember(Member member, PageRequest pageRequest);
 }
