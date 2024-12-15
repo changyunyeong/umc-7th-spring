@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import umc7th.example.umc7th.domain.common.BaseEntity;
 import umc7th.example.umc7th.domain.enums.Gender;
 import umc7th.example.umc7th.domain.enums.MemberStatus;
+import umc7th.example.umc7th.domain.enums.Role;
 import umc7th.example.umc7th.domain.enums.SocialType;
 import umc7th.example.umc7th.domain.mapping.MemberAgree;
 import umc7th.example.umc7th.domain.mapping.MemberMission;
@@ -52,8 +53,14 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-//    @Column(nullable = false, length = 50)
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ColumnDefault("0")
     private Integer Point;
@@ -70,4 +77,8 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
     // 양방향 매핑의 경우 1 : N에서 1에 해당하는 엔티티에게 설정
+
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 }

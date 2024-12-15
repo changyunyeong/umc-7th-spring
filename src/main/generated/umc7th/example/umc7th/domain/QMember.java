@@ -43,9 +43,13 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath name = createString("name");
 
+    public final StringPath password = createString("password");
+
     public final NumberPath<Integer> Point = createNumber("Point", Integer.class);
 
     public final ListPath<Review, QReview> reviewList = this.<Review, QReview>createList("reviewList", Review.class, QReview.class, PathInits.DIRECT2);
+
+    public final EnumPath<umc7th.example.umc7th.domain.enums.Role> role = createEnum("role", umc7th.example.umc7th.domain.enums.Role.class);
 
     public final EnumPath<umc7th.example.umc7th.domain.enums.SocialType> socialType = createEnum("socialType", umc7th.example.umc7th.domain.enums.SocialType.class);
 
