@@ -37,7 +37,7 @@ public class MemberRestController {
     }
 
     @PostMapping("/{memberId}/reviews")
-    @Operation(summary = "리뷰 목록 조회", description = "해당 유저의 리뷰 목록을 조회합니다.")
+    @Operation(summary = "리뷰 목록 조회하기", description = "해당 유저의 리뷰 목록을 조회합니다.")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200",description = "OK, 성공"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH003", description = "access 토큰을 주세요!",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
